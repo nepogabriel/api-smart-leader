@@ -2,29 +2,30 @@
 
 namespace App\Services;
 
+use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserService {
+class TaskService {
     public function __construct(
-        private UserRepository $userRepository
+        private TaskRepository $taskRepository
     ) {}
 
-    public function register(array $user): array
+    public function register(array $task): array
     {
         try {
-            $user = $this->userRepository->register($user);
+            $task = $this->taskRepository->register($task);
         
             return [
                 'return' => [
-                    'message' => 'Usuário Cadastrado com sucesso!',
-                    'data' => $user,
+                    'message' => 'Tarefa Cadastrada com sucesso!',
+                    'data' => $task,
                 ],
                 'code' => Response::HTTP_CREATED
             ];
         } catch (\Exception $exception) {
-            Log::error('Erro ao cadastrar usuário: ', [
+            Log::error('Erro ao cadastrar tarefa: ', [
                 'message' => $exception->getMessage(),
                 'code-http' => $exception->getCode()
             ]);

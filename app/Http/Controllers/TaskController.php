@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function __construct(
+        private TaskService $taskService
+    ) {}
+
     public function index()
     {
-        return Task::with('user')->paginate(10);
+        return Task::paginate(15);
     }
 
     public function store(TaskRequest $request)
     {
-        $data = $request->validated();
-        $task = Task::create($data);
-        return response()->json($task, 201);
+        $data = $this->taskService->register($request->validated());
+
+        return ApiResponse::response($data['return'], $data['code']);
     }
 
     public function show($id)

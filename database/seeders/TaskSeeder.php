@@ -16,11 +16,9 @@ class TaskSeeder extends Seeder
         if ($companies->count() > 0) {
             foreach (range(1, 10) as $i) {
                 $company = $companies->random()->id;
-                $user = User::where('company_id', '=', $company)->first();
 
                 Task::factory()->create([
                     'company_id' => $company,
-                    'user_id' => $user->id,
                 ]);
             }
         }

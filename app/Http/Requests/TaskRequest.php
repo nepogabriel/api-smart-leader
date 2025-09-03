@@ -17,26 +17,27 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['nullable', 'exists:users,id'],
             'title' => ['required', 'string','max:255'],
-            'status' => ['nullable', 'in:pending,in_progress,done'],
-            'priority' => ['nullable', 'in:low,medium,high'],
-            'due_date' => ['nullable', 'date', 'after_or_equal:today'],
+            'description' => ['required', 'string','max:2000'],
+            'status' => ['required', 'in:pending,in_progress,done'],
+            'priority' => ['required', 'in:low,medium,high'],
+            'due_date' => ['required', 'date', 'after_or_equal:today'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'user_id.exists' => 'O usuário selecionado é inválido.',
-
-            'title.required' => 'O título é obrigatório.',
+            'title.required' => 'O campo título é obrigatório.',
             'title.max'      => 'O título não pode ter mais de 255 caracteres.',
 
+            'status.required' => 'O campo status é obrigatório.',
             'status.in'      => 'O status deve ser pendente, em andamento ou concluído.',
 
+            'priority.required' => 'O campo prioridade é obrigatório.',
             'priority.in'    => 'A prioridade deve ser baixa, média ou alta.',
 
+            'due_date.required' => 'O campo prazo é obrigatório.',
             'due_date.date'  => 'O prazo deve ser uma data válida.',
             'due_date.after_or_equal' => 'O prazo deve ser hoje ou uma data futura.',
         ];
@@ -45,7 +46,6 @@ class TaskRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'user_id'  => 'usuário',
             'title'    => 'título',
             'status'   => 'status',
             'priority' => 'prioridade',
@@ -66,7 +66,6 @@ class TaskRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id'  => $this->user_id ? (int) $this->user_id : null,
             'title'    => $this->title ? trim($this->title) : null,
             'status'   => $this->status ? trim($this->status) : null,
             'priority' => $this->priority ? trim($this->priority) : null,

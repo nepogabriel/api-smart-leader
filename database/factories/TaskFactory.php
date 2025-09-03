@@ -16,7 +16,6 @@ class TaskFactory extends Factory
         
         return [
             'company_id' => Company::inRandomOrder()->first()->id ?? Company::factory(),
-            'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'title' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph(),
             'status' => $this->faker->randomElement($statuses),

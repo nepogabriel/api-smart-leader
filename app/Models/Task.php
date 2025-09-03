@@ -37,11 +37,6 @@ class Task extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
     // public function getStatusPtBrAttribute(): string
     // {
     //     return match($this->status) {

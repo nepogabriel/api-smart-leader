@@ -16,7 +16,6 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title', 60);
             $table->mediumText('description');
             $table->enum('status', ['pending', 'in_progress', 'done']);
@@ -26,7 +25,6 @@ class CreateTasksTable extends Migration
 
             $table->index(['company_id', 'status']);
             $table->index(['company_id', 'priority']);
-            $table->index(['company_id', 'user_id']);
             $table->index('due_date');
         });
     }
