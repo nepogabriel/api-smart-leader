@@ -66,16 +66,44 @@ class TaskService {
         }
     }
 
+    public function updateTaskById(int $id, array $data,): array
+    {
+        try {
+            $task = $this->taskRepository->getTaskById($id);
+
+            $updated = $this->taskRepository->updateTask($task, $data);
+        
+            return [
+                'return' => [
+                    'message' => $updated ? 'Tarefa atualizada com sucesso!' : 'Não foi possível atualizar a tarefa',
+                ],
+                'code' => Response::HTTP_OK
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao atualizar tarefa: ', [
+                'message' => $exception->getMessage(),
+                'code-http' => $exception->getCode()
+            ]);
+
+            return [
+                'return' => [
+                    'error' => $exception->getMessage(),
+                ],
+                'code' => $exception->getCode(),
+            ];
+        }
+    }
+
     public function deleteTaskById(int $id): array
     {
         try {
             $task = $this->taskRepository->getTaskById($id);
 
-            $delete = $this->taskRepository->deleteTaskById($task);
+            $deleted = $this->taskRepository->deleteTask($task);
         
             return [
                 'return' => [
-                    'message' => $delete ?? 'Tarefa deletada com sucesso!',
+                    'message' => $deleted ?? 'Tarefa deletada com sucesso!',
                 ],
                 'code' => Response::HTTP_OK
             ];

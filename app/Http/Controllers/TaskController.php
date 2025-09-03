@@ -27,34 +27,25 @@ class TaskController extends Controller
         return ApiResponse::response($data['return'], $data['code']);
     }
 
-    public function show(int $id)
+    public function show(int $id): JsonResponse
     {
         $data = $this->taskService->getTaskById($id);
 
         return ApiResponse::response($data['return'], $data['code']);
     }
 
-    public function update(UpdateTaskRequest $request, $id)
+    public function update(UpdateTaskRequest $request, $id): JsonResponse
     {
-        $task = Task::find($id);
-
-        if (!$task) {
-            return response()->json(['message' => 'Tarefa não encontrada'], 404);
-        }
-
         $data = array_filter($request->validated(), function ($value) {
             return !is_null($value);
         });
 
-        $task->update($data);
+        $data = $this->taskService->updateTaskById($id, $data);
 
-        return response()->json([
-            'message' => 'Tarefa atualizada com sucesso!',
-            'data'    => $task
-        ]);
+        return ApiResponse::response($data['return'], $data['code']);
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $data = $this->taskService->deleteTaskById($id);
 

@@ -28,7 +28,12 @@ class TaskRepository
         return $task;
     }
 
-    public function deleteTaskById(Task $task): bool|null
+    public function updateTask(Task $task, array $data): bool
+    {
+        return $task->update($data);
+    }
+
+    public function deleteTask(Task $task): bool|null
     {
         return $task->delete();
     }
