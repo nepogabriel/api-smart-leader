@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Jobs\SendTaskEmailJob;
 use App\Repositories\TaskRepository;
-use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,6 +16,10 @@ class TaskService {
     {
         try {
             $task = $this->taskRepository->register($task);
+
+            if ($task) {
+                SendTaskEmailJob::dispatch(auth()->user());
+            }
         
             return [
                 'return' => [
