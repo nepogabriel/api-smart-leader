@@ -28,7 +28,13 @@ class TaskController extends Controller
 
     public function show($id)
     {
-        //
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['message' => 'Tarefa não encontrada'], 404);
+        }
+
+        return response()->json($task);
     }
 
     public function update(Request $request, $id)

@@ -10,6 +10,7 @@ Route::middleware(['jwt', 'tenant'])->group(function () {
 
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::post('/tasks/register', [TaskController::class, 'store']);
+    Route::get('/tasks/{id}', [TaskController::class, 'show']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);
