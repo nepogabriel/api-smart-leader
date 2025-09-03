@@ -7,6 +7,7 @@ use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\TaskService;
+use Illuminate\Http\JsonResponse;
 
 class TaskController extends Controller
 {
@@ -19,22 +20,18 @@ class TaskController extends Controller
         return Task::paginate(15);
     }
 
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         $data = $this->taskService->register($request->validated());
 
         return ApiResponse::response($data['return'], $data['code']);
     }
 
-    public function show($id)
+    public function show(int $id)
     {
-        $task = Task::find($id);
+        $data = $this->taskService->getTaskById($id);
 
-        if (!$task) {
-            return response()->json(['message' => 'Tarefa não encontrada'], 404);
-        }
-
-        return response()->json($task);
+        return ApiResponse::response($data['return'], $data['code']);
     }
 
     public function update(UpdateTaskRequest $request, $id)
