@@ -56,14 +56,8 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
-        $task = Task::find($id);
+        $data = $this->taskService->deleteTaskById($id);
 
-        if (!$task) {
-            return response()->json(['message' => 'Tarefa não encontrada'], 404);
-        }
-
-        $task->delete();
-
-        return response()->json(['message' => 'Tarefa excluída com sucesso!']);
+        return ApiResponse::response($data['return'], $data['code']);
     }
 }

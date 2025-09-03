@@ -27,4 +27,9 @@ class TaskRepository
 
         return $task;
     }
+
+    public function deleteTaskById(Task $task): bool|null
+    {
+        return $task->delete();
+    }
 }

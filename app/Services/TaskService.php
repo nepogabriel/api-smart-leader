@@ -49,10 +49,38 @@ class TaskService {
                     'message' => 'Tarefa encontrada com sucesso!',
                     'data' => $task,
                 ],
-                'code' => Response::HTTP_CREATED
+                'code' => Response::HTTP_OK
             ];
         } catch (\Exception $exception) {
             Log::error('Erro ao buscar tarefa por ID: ', [
+                'message' => $exception->getMessage(),
+                'code-http' => $exception->getCode()
+            ]);
+
+            return [
+                'return' => [
+                    'error' => $exception->getMessage(),
+                ],
+                'code' => $exception->getCode(),
+            ];
+        }
+    }
+
+    public function deleteTaskById(int $id): array
+    {
+        try {
+            $task = $this->taskRepository->getTaskById($id);
+
+            $delete = $this->taskRepository->deleteTaskById($task);
+        
+            return [
+                'return' => [
+                    'message' => $delete ?? 'Tarefa deletada com sucesso!',
+                ],
+                'code' => Response::HTTP_OK
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao deletar tarefa: ', [
                 'message' => $exception->getMessage(),
                 'code-http' => $exception->getCode()
             ]);
