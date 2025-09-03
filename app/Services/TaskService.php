@@ -38,4 +38,31 @@ class TaskService {
             ];
         }
     }
+
+    public function getTaskById(int $id): array
+    {
+        try {
+            $task = $this->taskRepository->getTaskById($id);
+        
+            return [
+                'return' => [
+                    'message' => 'Tarefa encontrada com sucesso!',
+                    'data' => $task,
+                ],
+                'code' => Response::HTTP_CREATED
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao buscar tarefa por ID: ', [
+                'message' => $exception->getMessage(),
+                'code-http' => $exception->getCode()
+            ]);
+
+            return [
+                'return' => [
+                    'error' => $exception->getMessage(),
+                ],
+                'code' => $exception->getCode(),
+            ];
+        }
+    }
 }
