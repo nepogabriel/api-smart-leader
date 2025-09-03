@@ -16,12 +16,12 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title', 60);
-            $table->mediumText('description')->nullable();
+            $table->mediumText('description');
             $table->enum('status', ['pending', 'in_progress', 'done']);
             $table->enum('priority', ['low', 'medium', 'high']);
-            $table->date('due_date')->nullable();
+            $table->date('due_date');
             $table->timestamps();
 
             $table->index(['company_id', 'status']);
