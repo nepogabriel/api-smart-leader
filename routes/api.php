@@ -9,9 +9,10 @@ Route::middleware(['jwt', 'tenant'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::get('/tasks', [TaskController::class, 'index']);
-    Route::post('/tasks/register', [TaskController::class, 'store']);
+    Route::post('/tasks', [TaskController::class, 'store']);
     Route::get('/tasks/{id}', [TaskController::class, 'show']);
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+    Route::put('/tasks/{id}', [TaskController::class, 'update']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Task;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskRequest extends FormRequest
+class StoreTaskRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,7 +17,7 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string','max:255'],
+            'title' => ['required', 'string','max:60'],
             'description' => ['required', 'string','max:2000'],
             'status' => ['required', 'in:pending,in_progress,done'],
             'priority' => ['required', 'in:low,medium,high'],
@@ -29,16 +29,19 @@ class TaskRequest extends FormRequest
     {
         return [
             'title.required' => 'O campo título é obrigatório.',
-            'title.max'      => 'O título não pode ter mais de 255 caracteres.',
+            'title.max' => 'O título não pode ter mais de 60 caracteres.',
+
+            'description.required' => 'O campo descrição é obrigatório.',
+            'description.max' => 'A descrição não pode ter mais de 2000 caracteres.',
 
             'status.required' => 'O campo status é obrigatório.',
-            'status.in'      => 'O status deve ser pendente, em andamento ou concluído.',
+            'status.in' => 'O status deve ser: pending, in_progress ou done.',
 
             'priority.required' => 'O campo prioridade é obrigatório.',
-            'priority.in'    => 'A prioridade deve ser baixa, média ou alta.',
+            'priority.in' => 'A prioridade deve ser: low, medium ou high.',
 
             'due_date.required' => 'O campo prazo é obrigatório.',
-            'due_date.date'  => 'O prazo deve ser uma data válida.',
+            'due_date.date' => 'O prazo deve ser uma data válida.',
             'due_date.after_or_equal' => 'O prazo deve ser hoje ou uma data futura.',
         ];
     }

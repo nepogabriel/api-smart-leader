@@ -79,9 +79,9 @@ class UserRequest extends FormRequest
     {
         return [
             'company_id' => 'empresa',
-            'name' => 'nome',
-            'email' => 'e-mail',
-            'password' => 'senha'
+            'name'       => 'nome',
+            'email'      => 'e-mail',
+            'password'   => 'senha'
         ];
     }
 
@@ -98,9 +98,9 @@ class UserRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'company' => (int) $this->company_id,
-            'name' => trim($this->name),
-            'email' => strtolower(trim($this->email)),
+            'company'  => (int) $this->company_id,
+            'name'     => trim($this->name),
+            'email'    => strtolower(trim($this->email)),
             'password' => trim($this->password)
         ]);
     }
