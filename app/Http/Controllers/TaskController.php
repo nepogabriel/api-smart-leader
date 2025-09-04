@@ -17,7 +17,7 @@ class TaskController extends Controller
 
     public function index()
     {
-        return Task::paginate(15);
+        return Task::paginate(10);
     }
 
     public function store(StoreTaskRequest $request): JsonResponse

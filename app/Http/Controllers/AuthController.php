@@ -23,7 +23,9 @@ class AuthController extends Controller
 
     public function me(): JsonResponse
     {
-        return ApiResponse::response(auth()->user());
+        $data = $this->authService->me();
+
+        return ApiResponse::response($data['return'], $data['code']);
     }
 
     public function logout(): JsonResponse
