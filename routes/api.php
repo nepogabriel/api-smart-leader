@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 
@@ -17,3 +18,5 @@ Route::middleware(['jwt', 'tenant'])->group(function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
+
+Route::get('/companies', [CompanyController::class, 'getAllCompanies']);

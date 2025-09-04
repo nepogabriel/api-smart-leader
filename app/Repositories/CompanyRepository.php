@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Company;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompanyRepository
@@ -16,6 +17,16 @@ class CompanyRepository
 
         if (!$company)
             throw new \Exception('Empresa não encontrada', Response::HTTP_NOT_FOUND);
+
+        return $company;
+    }
+
+    public function getAllCompanies(): Collection
+    {
+        $company = Company::all();
+
+        if (!$company)
+            throw new \Exception('Nenhuma empresa não encontrada', Response::HTTP_NOT_FOUND);
 
         return $company;
     }
