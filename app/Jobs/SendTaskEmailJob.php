@@ -17,11 +17,12 @@ class SendTaskEmailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(
-        public $user
+        public $user,
+        public $task
     ) {}
 
     public function handle(): void
     {
-        Mail::to($this->user->email)->send(new TaskCreatedMail($this->user));
+        Mail::to($this->user->email)->send(new TaskCreatedMail($this->user, $this->task));
     }
 }

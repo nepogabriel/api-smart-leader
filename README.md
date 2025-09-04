@@ -81,11 +81,6 @@ composer update
 php artisan db:seed
 ```
 
-- 10- Link de acesso
-```
-http://localhost:8282/api/
-```
-
 # Configurar servidor de e-mail
 ## Dentro do .env informe as credenciais
 ```

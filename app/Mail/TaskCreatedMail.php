@@ -12,7 +12,8 @@ class TaskCreatedMail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public function __construct(
-        public $user
+        public $user,
+        public $task
     ) {}
 
     /**
@@ -22,6 +23,6 @@ class TaskCreatedMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject('Nova Tarefa!')->view('mails.task-created');
+        return $this->subject('Nova Tarefa!')->markdown('emails.task-created');
     }
 }

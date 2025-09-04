@@ -18,7 +18,7 @@ class TaskService {
             $task = $this->taskRepository->register($task);
 
             if ($task) {
-                SendTaskEmailJob::dispatch(auth()->user());
+                SendTaskEmailJob::dispatch(auth()->user(), $task);
             }
         
             return [
