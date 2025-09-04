@@ -12,6 +12,7 @@ Aplicação completa para gerenciamento de tarefas (to-do list)
 - Fila assíncrona: Database ou Redis
 - Job
 - Mysql
+- PHPUnit
 
 ## Rodando projeto
 ### Pré-requisitos
@@ -98,6 +99,15 @@ docker exec -it api-smart-leader bash
 
 php artisan queue:work
 ```
+
+# Testes Unitários
+- Executar os testes:
+``` bash
+docker exec -it api-smart-leader bash
+
+php artisan test
+```
+
 ### Banco de dados
 - Porta externa: 33063
 - Porta interna: 3306
